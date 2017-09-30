@@ -1,6 +1,6 @@
 # spot
 
-Spot is a simple command line tool that offers basic control over currently playing Spotify tracks. I made it because I find switching to the player distracting while working. It currently supports adding a song to your library (Spotify's equivalent to liking) and
+Spot is a simple command line tool that offers basic control over currently playing Spotify tracks. I made it because I find switching to the player distracting while working. It currently supports adding a song to your library (Spotify's equivalent to liking) and skipping to the next song in your playlist.
 
 ## Setup
 
