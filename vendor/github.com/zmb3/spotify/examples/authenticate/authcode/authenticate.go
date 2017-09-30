@@ -13,6 +13,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/user"
 
 	"github.com/zmb3/spotify"
 )
@@ -21,6 +22,7 @@ import (
 // You must register an application at Spotify's developer portal
 // and enter this value.
 const redirectURI = "http://localhost:8080/callback"
+const settingsFile = "~/"
 
 var (
 	auth = spotify.NewAuthenticator(
@@ -68,7 +70,12 @@ func completeAuth(w http.ResponseWriter, r *http.Request) {
 		log.Fatalf("State mismatch: %s != %s\n", st, state)
 	}
 
-	f, err := os.Create("/etc/spotify.json")
+	u, err := user.Current()
+	if err != nil {
+		log.Fatalf("failed to get current user: %+v", err)
+	}
+
+	f, err := os.Create(fmt.Sprintf("%s/.spotify.json", u.HomeDir))
 	if err != nil {
 		log.Fatal(err)
 	}

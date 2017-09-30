@@ -1,6 +1,6 @@
 
-build:
-	go build -o likespot github.com/mikejholly/likespot/cmd
+install:
+	go install github.com/mikejholly/spot/cmd/spot
 
-install: build
-	 sudo mv likespot /usr/local/bin
+auth:
+	go run cmd/auth/main.go
