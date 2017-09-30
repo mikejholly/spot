@@ -6,7 +6,7 @@ Spot is a simple command line tool that offers basic control over currently play
 
 ### 1. Install
 
-Run `make install` in this repo's directory to install.
+Run `make install` in this repo's directory to install. Alternative, run `go install github.com/mikejholly/spot/cmd/spot`.
 
 ### 2. Authorize
 
@@ -14,7 +14,7 @@ Spotify only supports 2-legged OAuth and forces you to run a web server to compl
 
 1. Go to https://developer.spotify.com/my-applications
 1. Create a new application, set the Redirect URI to `http://localhost:8080/callback`.
-1. Add `SPOTIFY_ID` and `SPOTIFY_SECRET` to your enviroment.
+1. Add `SPOTIFY_ID` and `SPOTIFY_SECRET` to your enviroment. I've added these to my `.zshrc` file.
 1. Run `make auth`. Open the URL and authorize the application.
 1. You should have a valid settings file at `~/.spotify.json`.
 
