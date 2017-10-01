@@ -39,33 +39,65 @@ func main() {
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
 		case "a", "add":
-			addToLibrary(&client)
+			if err := addToLibrary(&client); err != nil {
+				log.Fatalf("failed to add song to library: %v\n", err)
+			}
+			fmt.Println("saved song to library")
+		case "r", "remove":
+			if err := removeFromLibrary(&client); err != nil {
+				log.Fatalf("failed to remove song from library: %v\n", err)
+			}
+			fmt.Println("removed song from library")
 		case "n", "next":
-			nextSong(&client)
+			if err := client.Next(); err != nil {
+				log.Fatalf("failed to move to next song: %v\n", err)
+			}
+			fmt.Println("moved to next song")
+		case "p", "prev":
+			if err := client.Previous(); err != nil {
+				log.Fatalf("failed to move to previous song: %v\n", err)
+			}
+			fmt.Println("moved to previous song")
+		case "i", "info":
+			if cp, err := client.PlayerCurrentlyPlaying(); err != nil || cp.Item == nil {
+				log.Fatalf("failed to get song player is currently playing: %v\n", err)
+			} else {
+				fmt.Printf("current song: %s - %s\n", cp.Item.Name, cp.Item.Artists[0].Name)
+			}
 		}
 	} else {
-		addToLibrary(&client)
+		if err := addToLibrary(&client); err != nil {
+			log.Fatalf("failed to add song to library: %v\n", err)
+		}
+		fmt.Println("saved song to library")
 	}
 
 }
 
-func addToLibrary(client *spotify.Client) {
+func addToLibrary(client *spotify.Client) error {
 	cp, err := client.PlayerCurrentlyPlaying()
 	if err != nil {
-		log.Fatalf("failed to load current song: %s", err)
+		return err
 	}
 
 	err = client.AddTracksToLibrary(cp.Item.ID)
 	if err != nil {
-		log.Fatalf("failed to add track: %s", err)
+		return err
 	}
 
-	fmt.Println(cp.Item.Name, "saved to library")
+	return nil
 }
 
-func nextSong(client *spotify.Client) {
-	err := client.Next()
+func removeFromLibrary(client *spotify.Client) error {
+	cp, err := client.PlayerCurrentlyPlaying()
 	if err != nil {
-		log.Fatal("failed to move to next song")
+		return err
 	}
+
+	err = client.RemoveTracksFromLibrary(cp.Item.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
