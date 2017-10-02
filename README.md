@@ -24,6 +24,18 @@ Spotify only supports 2-legged OAuth and forces you to run a web server to compl
 
 Use `spot a` or `spot add` to add the currently playing song to your library.
 
+### Disliking
+
+Use `spot r` or `spot remove` to remove the currently playing song from your library.
+
 ### Nexting
 
 Use `spot n` or `spot next` to skip to the next song in your playlist.
+
+### Previous-ing
+
+Use `spot p` or `spot prev` to move to the previous song in your playlist.
+
+### Info-ing
+
+Use `spot i` or `spot info` to get information about the currently playing song.
