@@ -58,6 +58,13 @@ func main() {
 				log.Fatalf("failed to move to previous song: %v\n", err)
 			}
 			fmt.Println("moved to previous song")
+		case "t", "toggle":
+			fmt.Println("toggling play/pause...")
+			msg, err := togglePlay(&client)
+			if err != nil {
+				log.Fatalf("%v: %v\n", msg, err)
+			}
+			fmt.Println(msg)
 		case "i", "info":
 			if cp, err := client.PlayerCurrentlyPlaying(); err != nil || cp.Item == nil {
 				log.Fatalf("failed to get song player is currently playing: %v\n", err)
@@ -100,4 +107,26 @@ func removeFromLibrary(client *spotify.Client) error {
 	}
 
 	return nil
+}
+
+func togglePlay(client *spotify.Client) (string, error) {
+	state, err := client.PlayerCurrentlyPlaying()
+	if err != nil {
+		// this is also thrown if no player is active
+		return "failed to retrieve player state", err
+	}
+	// toggle play state
+	if state.Playing {
+		err := client.Pause()
+		if err != nil {
+			return "failed to pause", err
+		}
+		return "paused", nil
+	} else {
+		err := client.Play()
+		if err != nil {
+			return "failed to play", err
+		}
+		return "started playing", nil
+	}
 }
