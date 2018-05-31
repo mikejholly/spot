@@ -36,6 +36,10 @@ Use `spot n` or `spot next` to skip to the next song in your playlist.
 
 Use `spot p` or `spot prev` to move to the previous song in your playlist.
 
+### Toggling
+
+Use `spot t` or `spot toggle` to toggle play/pause state.
+
 ### Info-ing
 
 Use `spot i` or `spot info` to get information about the currently playing song.
